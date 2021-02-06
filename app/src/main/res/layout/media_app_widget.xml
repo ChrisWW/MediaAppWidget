@@ -1,0 +1,56 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="?attr/appWidgetBackgroundColor"
+    android:padding="@dimen/widget_margin"
+    android:theme="@style/ThemeOverlay.MyAppWidget.AppWidgetContainer">
+
+    <TextView
+        android:id="@+id/widget_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/appWidgetBackgroundColor"
+        android:contentDescription="@string/appwidget_text"
+        android:text="@string/appwidget_text"
+        android:textColor="?attr/appWidgetTextColor"
+        android:textSize="24sp"
+        android:textStyle="bold|italic" />
+
+    <Button
+        android:id="@+id/widget_bt1"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:text="WWW" />
+
+    <Button
+        android:id="@+id/widget_bt2"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:text="AKCJA" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        app:srcCompat="@android:drawable/btn_star_big_off" />
+
+    <Button
+        android:id="@+id/bt_start"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:text="START" />
+
+    <Button
+        android:id="@+id/bt_stop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="STOP" />
+
+    <Button
+        android:id="@+id/bt_next"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:text="NEXT" />
+</LinearLayout>

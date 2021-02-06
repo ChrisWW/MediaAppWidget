@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">MyAppWidget</string>
+    <string name="appwidget_text">Witaj</string>
+    <string name="add_widget">Add widget</string>
+    <string name="action1">com.example.myappwidget.action1</string>
+    <string name="musicplay">com.example.myappwidget.musicplay</string>
+    <string name="musicstop">com.example.myappwidget.musicstop</string>
+    <string name="musicnext">com.example.myappwidget.musicnext</string>
+</resources>
