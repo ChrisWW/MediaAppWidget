@@ -12,7 +12,7 @@ import android.widget.RemoteViews
 import android.widget.Toast
 
 lateinit var myPlayer: MediaPlayer
-var flagSum = -1
+var flagSum = 0
 var imageCount = 0
 var musicCount = 0
 
@@ -37,27 +37,47 @@ class MediaAppWidget : AppWidgetProvider() {
         // Enter relevant functionality for when the last widget is disabled
     }
 
+
+     // Picture
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)
         if (intent?.action == context?.getString(R.string.action1)) {
-            context?.updateImage()
+
+            val widgetViews = RemoteViews(context?.packageName, R.layout.media_app_widget)
+            if (imageCount == 0) {
+                imageCount++
+                widgetViews.setImageViewResource(R.id.imageView, R.drawable.guitar1)
+                Toast.makeText(context, "Image set to guitar 1", Toast.LENGTH_SHORT).show()
+            } else {
+                imageCount--
+                widgetViews.setImageViewResource(R.id.imageView, R.drawable.guitar2)
+                Toast.makeText(context, "Image set to guitar 2", Toast.LENGTH_SHORT).show()
+            }
+            val widgetComponent = context?.let { ComponentName(it, MediaAppWidget::class.java) }
+            val widgetManager = AppWidgetManager.getInstance(context)
+
+            //View update
+            widgetManager.updateAppWidget(widgetComponent, widgetViews)
+
         }
-        // music play
+        // music play //If action intent of musicplay String it goes through it
         if (intent?.action == context?.getString(R.string.musicplay)) {
             Toast.makeText(context, "Music started", Toast.LENGTH_SHORT).show()
-            if (flagSum == -1) {
+
+            // creating Mediaplayer only once
+            if (flagSum == 0) {
                 myPlayer = MediaPlayer.create(context, R.raw.gloria)
                 flagSum++
                 musicCount++
             }
             myPlayer.start()
         }
-        // music stop
+        // music stop  //the same /\
         if (intent?.action == context?.getString(R.string.musicstop)) {
             Toast.makeText(context, "Stop Music", Toast.LENGTH_SHORT).show()
             myPlayer.pause()
         }
-        // music next
+        // music next //the same /\
         if (intent?.action == context?.getString(R.string.musicnext)) {
             Toast.makeText(context, "Go for next", Toast.LENGTH_SHORT).show()
             myPlayer.stop()
@@ -70,28 +90,11 @@ class MediaAppWidget : AppWidgetProvider() {
             }
             myPlayer.start()
         }
-        Toast.makeText(context, "JustclickedAny", Toast.LENGTH_SHORT).show()
-    }
-
-
-    private fun Context.updateImage() {
-        val widgetViews = RemoteViews(this.packageName, R.layout.media_app_widget)
-        if (imageCount == 0) {
-            imageCount++
-            widgetViews.setImageViewResource(R.id.imageView, R.drawable.guitar1)
-            Toast.makeText(this, "Image set to guitar 1", Toast.LENGTH_SHORT).show()
-        } else {
-            imageCount--
-            widgetViews.setImageViewResource(R.id.imageView, R.drawable.guitar2)
-            Toast.makeText(this, "Image set to guitar 2", Toast.LENGTH_SHORT).show()
-        }
-        val widgetComponent = ComponentName(this, MediaAppWidget::class.java)
-        val widgetManager = AppWidgetManager.getInstance(this)
-        widgetManager.updateAppWidget(widgetComponent, widgetViews)
     }
 
 }
 
+//Update Widget View
 internal fun updateAppWidget(
     context: Context,
     appWidgetManager: AppWidgetManager,
@@ -99,7 +102,7 @@ internal fun updateAppWidget(
 ) {
     val widgetText = context.getString(R.string.appwidget_text)
 
-    // Construct the RemoteViews object //
+    // Construct the RemoteViews object // WWW
     val views = RemoteViews(context.packageName, R.layout.media_app_widget)
     views.setTextViewText(R.id.widget_tv, widgetText)
 
@@ -114,7 +117,7 @@ internal fun updateAppWidget(
     views.setOnClickPendingIntent(R.id.widget_bt1, pendingWWW)
 
 
-    ////
+    //// Creating broadcast intent picture
     val intentAction = Intent(context.getString(R.string.action1))
     intentAction.component = ComponentName(context, MediaAppWidget::class.java)
     val pendingAction = PendingIntent.getBroadcast(
@@ -125,7 +128,7 @@ internal fun updateAppWidget(
     )
     views.setOnClickPendingIntent(R.id.widget_bt2, pendingAction)
 
-    //// start ////
+    //// start //// Music
     val intentMusicStart = Intent(context.getString(R.string.musicplay))
     intentMusicStart.component = ComponentName(context, MediaAppWidget::class.java)
     val pendingMusicStart = PendingIntent.getBroadcast(
@@ -136,7 +139,7 @@ internal fun updateAppWidget(
     )
     views.setOnClickPendingIntent(R.id.bt_start, pendingMusicStart)
 
-    //// stop ////
+    //// stop //// Music
     val intentStop = Intent(context.getString(R.string.musicstop))
     intentStop.component = ComponentName(context, MediaAppWidget::class.java)
     val pendingStop = PendingIntent.getBroadcast(
@@ -147,7 +150,7 @@ internal fun updateAppWidget(
     )
     views.setOnClickPendingIntent(R.id.bt_stop, pendingStop)
 
-    //// next ////
+    //// next //// Music
     val intentMusicNextSong = Intent(context.getString(R.string.musicnext))
     intentMusicNextSong.component = ComponentName(context, MediaAppWidget::class.java)
     val pendingMusicNextSong = PendingIntent.getBroadcast(

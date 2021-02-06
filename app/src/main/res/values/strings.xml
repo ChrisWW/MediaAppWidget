@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">MyAppWidget</string>
-    <string name="appwidget_text">Witaj</string>
+    <string name="appwidget_text">Welcome</string>
     <string name="add_widget">Add widget</string>
     <string name="action1">com.example.myappwidget.action1</string>
     <string name="musicplay">com.example.myappwidget.musicplay</string>
